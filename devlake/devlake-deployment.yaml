@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: devlake
+  namespace: argocd
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: devlake
+  template:
+    metadata:
+      labels:
+        app: devlake
+    spec:
+      containers:
+        - name: devlake
+          image: apache/devlake:latest  # Docker image from Docker Hub
+          ports:
+            - containerPort: 8080
