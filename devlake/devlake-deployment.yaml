@@ -15,6 +15,25 @@ spec:
     spec:
       containers:
         - name: devlake
-          image: apache/devlake:latest  # Docker image from Docker Hub
+          image: apache/devlake:latest
           ports:
             - containerPort: 8080
+          env:
+            - name: ENCRYPTION_SECRET
+              value: yourStrongSecretHere
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: devlake-service
+  namespace: argocd
+spec:
+  selector:
+    app: devlake
+  type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
